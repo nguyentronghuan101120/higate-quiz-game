@@ -78,11 +78,11 @@ class _SignInScreenState extends State<SignInScreen> {
             showSignIn(context),
             SizedBox(height: size.height * 0.02),
             showGoSignup(),
-            orLabel(),
-            SizedBox(height: size.height * 0.03),
-            loginWith(),
-            showSocialMedia(context),
-            SizedBox(height: size.height * 0.05),
+            // orLabel(),
+            // SizedBox(height: size.height * 0.03),
+            // loginWith(),
+            // showSocialMedia(context),
+            // SizedBox(height: size.height * 0.05),
             const TermsAndCondition(),
           ],
         ),
@@ -98,8 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
         bloc: context.read<SignInCubit>(),
         listener: (context, state) async {
           //Exceuting only if authProvider is email
-          if (state is SignInSuccess &&
-              state.authProvider == AuthProviders.email) {
+          if (state is SignInSuccess && state.authProvider == AuthProviders.email) {
             //to update authdetails after successfull sign in
             context.read<AuthCubit>().updateAuthDetails(
                   authProvider: state.authProvider,
@@ -124,8 +123,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 arguments: false,
               );
             }
-          } else if (state is SignInFailure &&
-              state.authProvider == AuthProviders.email) {
+          } else if (state is SignInFailure && state.authProvider == AuthProviders.email) {
             UiUtils.showSnackBar(
               context.tr(
                 convertErrorCodeToLanguageKey(state.errorMessage),
@@ -151,8 +149,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       }
                     }
                   },
-            child: state is SignInProgress &&
-                    state.authProvider == AuthProviders.email
+            child: state is SignInProgress && state.authProvider == AuthProviders.email
                 ? const Center(
                     child: CircularProgressContainer(whiteLoader: true),
                   )
@@ -243,8 +240,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             end: MediaQuery.of(context).size.width * .08,
                             top: 20,
                           ),
-                          child:
-                              EmailTextField(controller: forgotPswdController),
+                          child: EmailTextField(controller: forgotPswdController),
                         ),
                         const SizedBox(height: 30),
                         CustomRoundedButton(
@@ -316,8 +312,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return BlocConsumer<SignInCubit, SignInState>(
       listener: (context, state) {
         //Exceuting only if authProvider is not email
-        if (state is SignInSuccess &&
-            state.authProvider != AuthProviders.email) {
+        if (state is SignInSuccess && state.authProvider != AuthProviders.email) {
           context.read<AuthCubit>().updateAuthDetails(
                 authProvider: state.authProvider,
                 firebaseId: state.user.uid,
@@ -327,8 +322,7 @@ class _SignInScreenState extends State<SignInScreen> {
           if (state.isNewUser) {
             context.read<UserDetailsCubit>().fetchUserDetails();
             //navigate to select profile screen
-            Navigator.of(context)
-                .pushReplacementNamed(Routes.selectProfile, arguments: true);
+            Navigator.of(context).pushReplacementNamed(Routes.selectProfile, arguments: true);
           } else {
             //get user detials of signed in user
             context.read<UserDetailsCubit>().fetchUserDetails();
@@ -339,8 +333,7 @@ class _SignInScreenState extends State<SignInScreen> {
               arguments: false,
             );
           }
-        } else if (state is SignInFailure &&
-            state.authProvider != AuthProviders.email) {
+        } else if (state is SignInFailure && state.authProvider != AuthProviders.email) {
           UiUtils.showSnackBar(
             context.tr(
               convertErrorCodeToLanguageKey(state.errorMessage),
@@ -355,8 +348,7 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: (state is SignInProgress &&
-                    state.authProvider != AuthProviders.email)
+            children: (state is SignInProgress && state.authProvider != AuthProviders.email)
                 ? [
                     const Center(child: CircularProgressContainer()),
                   ]
@@ -368,8 +360,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           width: 50,
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.surface,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
+                            borderRadius: const BorderRadius.all(Radius.circular(12)),
                           ),
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(12),
@@ -379,9 +370,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             width: 38,
                           ),
                         ),
-                        onTap: () => context
-                            .read<SignInCubit>()
-                            .signInUser(AuthProviders.apple),
+                        onTap: () => context.read<SignInCubit>().signInUser(AuthProviders.apple),
                       ),
                       const SizedBox(width: 25),
                     ],
@@ -391,8 +380,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         width: 50,
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.surface,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
+                          borderRadius: const BorderRadius.all(Radius.circular(12)),
                         ),
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(12),
@@ -402,9 +390,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           width: 38,
                         ),
                       ),
-                      onTap: () => context
-                          .read<SignInCubit>()
-                          .signInUser(AuthProviders.gmail),
+                      onTap: () => context.read<SignInCubit>().signInUser(AuthProviders.gmail),
                     ),
                     const SizedBox(width: 25),
                     InkWell(
@@ -413,8 +399,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         width: 50,
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.surface,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
+                          borderRadius: const BorderRadius.all(Radius.circular(12)),
                         ),
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(12),
@@ -424,8 +409,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           width: 38,
                         ),
                       ),
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.otpScreen),
+                      onTap: () => Navigator.of(context).pushNamed(Routes.otpScreen),
                     ),
                   ],
           ),

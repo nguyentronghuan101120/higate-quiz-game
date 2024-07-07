@@ -34,5 +34,26 @@
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAVxFkKTDa8F_H3QfUgDW0X78AlOEx_39U",
+      authDomain: "higate-quiz-game.firebaseapp.com",
+      databaseURL: "https://higate-quiz-game-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "higate-quiz-game",
+      storageBucket: "higate-quiz-game.appspot.com",
+      messagingSenderId: "838093881502",
+      appId: "1:838093881502:web:135b0a457ee802b8d9bb8f"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
 </body>
 </html>

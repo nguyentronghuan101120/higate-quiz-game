@@ -25,8 +25,7 @@ class UserDetailsFetchFailure extends UserDetailsState {
 }
 
 class UserDetailsCubit extends Cubit<UserDetailsState> {
-  UserDetailsCubit(this._profileManagementRepository)
-      : super(UserDetailsInitial());
+  UserDetailsCubit(this._profileManagementRepository) : super(UserDetailsInitial());
   final ProfileManagementRepository _profileManagementRepository;
 
   //to fetch user details form remote
@@ -36,6 +35,24 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
     try {
       final userProfile =
           await _profileManagementRepository.getUserDetailsById();
+
+      // final userProfile = UserProfile.fromJson({
+      //   'email': 'user@example.com',
+      //   'fcmToken': 'fcmToken12345',
+      //   'referCode': 'REF12345',
+      //   'firebaseId': 'firebaseId12345',
+      //   'mobileNumber': '+1234567890',
+      //   'name': 'John Doe',
+      //   'profileUrl': 'https://example.com/profile.jpg',
+      //   'userId': 'userId12345',
+      //   'allTimeRank': 10,
+      //   'allTimeScore': 5000,
+      //   'coins': 250,
+      //   'registeredDate': '2023-07-01T12:34:56Z',
+      //   'status': 'active',
+      //   'adsRemovedForUser': true,
+      //   'isDailyAdsAvailable': false,
+      // });
       emit(UserDetailsFetchSuccess(userProfile));
     } catch (e) {
       emit(UserDetailsFetchFailure(e.toString()));
@@ -44,33 +61,25 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
 
   // ignore: avoid_bool_literals_in_conditional_expressions
   bool get isDailyAdAvailable => (state is UserDetailsFetchSuccess)
-      ? (state as UserDetailsFetchSuccess).userProfile.isDailyAdsAvailable ??
-          false
+      ? (state as UserDetailsFetchSuccess).userProfile.isDailyAdsAvailable ?? false
       : false;
 
   Future<bool> watchedDailyAd() async {
     return _profileManagementRepository.watchedDailyAd();
   }
 
-  String getUserName() => state is UserDetailsFetchSuccess
-      ? (state as UserDetailsFetchSuccess).userProfile.name!
-      : '';
+  String getUserName() => state is UserDetailsFetchSuccess ? (state as UserDetailsFetchSuccess).userProfile.name! : '';
 
-  String userId() => state is UserDetailsFetchSuccess
-      ? (state as UserDetailsFetchSuccess).userProfile.userId!
-      : '';
+  String userId() => state is UserDetailsFetchSuccess ? (state as UserDetailsFetchSuccess).userProfile.userId! : '';
 
-  String getUserFirebaseId() => state is UserDetailsFetchSuccess
-      ? (state as UserDetailsFetchSuccess).userProfile.firebaseId!
-      : '';
+  String getUserFirebaseId() =>
+      state is UserDetailsFetchSuccess ? (state as UserDetailsFetchSuccess).userProfile.firebaseId! : '';
 
-  String? getUserMobile() => state is UserDetailsFetchSuccess
-      ? (state as UserDetailsFetchSuccess).userProfile.mobileNumber
-      : '';
+  String? getUserMobile() =>
+      state is UserDetailsFetchSuccess ? (state as UserDetailsFetchSuccess).userProfile.mobileNumber : '';
 
-  String? getUserEmail() => state is UserDetailsFetchSuccess
-      ? (state as UserDetailsFetchSuccess).userProfile.email
-      : '';
+  String? getUserEmail() =>
+      state is UserDetailsFetchSuccess ? (state as UserDetailsFetchSuccess).userProfile.email : '';
 
   void updateUserProfileUrl(String profileUrl) {
     if (state is UserDetailsFetchSuccess) {
@@ -121,8 +130,7 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
 
       final currentCoins = int.parse(oldUserDetails.coins!);
       log('Coins : $currentCoins');
-      final updatedCoins =
-          addCoin! ? (currentCoins + coins!) : (currentCoins - coins!);
+      final updatedCoins = addCoin! ? (currentCoins + coins!) : (currentCoins - coins!);
       log('After Update Coins: $updatedCoins');
       final userDetails = oldUserDetails.copyWith(
         coins: updatedCoins.toString(),
@@ -143,13 +151,10 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
     }
   }
 
-  String? getCoins() => state is UserDetailsFetchSuccess
-      ? (state as UserDetailsFetchSuccess).userProfile.coins
-      : '0';
+  String? getCoins() => state is UserDetailsFetchSuccess ? (state as UserDetailsFetchSuccess).userProfile.coins : '0';
 
-  UserProfile getUserProfile() => state is UserDetailsFetchSuccess
-      ? (state as UserDetailsFetchSuccess).userProfile
-      : UserProfile();
+  UserProfile getUserProfile() =>
+      state is UserDetailsFetchSuccess ? (state as UserDetailsFetchSuccess).userProfile : UserProfile();
 
   // ignore: avoid_bool_literals_in_conditional_expressions
   bool removeAds() => state is UserDetailsFetchSuccess

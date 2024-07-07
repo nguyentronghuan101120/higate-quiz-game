@@ -10,7 +10,7 @@ export 'sound_constants.dart';
 export 'string_labels.dart';
 
 const appName = 'Elite Quiz';
-const packageName = 'com.wrteam.flutterquiz';
+const packageName = 'com.leonguyen.flutterquiz';
 const iosAppId = '585027354';
 
 /// Add your database url

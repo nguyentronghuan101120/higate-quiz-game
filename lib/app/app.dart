@@ -40,6 +40,7 @@ import 'package:flutterquiz/features/statistic/cubits/statisticsCubit.dart';
 import 'package:flutterquiz/features/statistic/statisticRepository.dart';
 import 'package:flutterquiz/features/systemConfig/cubits/systemConfigCubit.dart';
 import 'package:flutterquiz/features/systemConfig/system_config_repository.dart';
+import 'package:flutterquiz/firebase_options.dart';
 import 'package:flutterquiz/ui/styles/theme/appTheme.dart';
 import 'package:flutterquiz/ui/styles/theme/themeCubit.dart';
 import 'package:flutterquiz/utils/constants/constants.dart';
@@ -55,9 +56,10 @@ Future<Widget> initializeApp() async {
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
 
-    await Firebase.initializeApp();
-    FirebaseFirestore.instance.settings =
-        const Settings(persistenceEnabled: false);
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    FirebaseFirestore.instance.settings = const Settings(persistenceEnabled: false);
   }
 
   // Local phone storage
@@ -176,13 +178,10 @@ class MyApp extends StatelessWidget {
           // it will rebuild the child
           final currentTheme = context.watch<ThemeCubit>().state.appTheme;
 
-          final currentLanguage =
-              context.watch<AppLocalizationCubit>().state.language;
+          final currentLanguage = context.watch<AppLocalizationCubit>().state.language;
 
           return AnnotatedRegion<SystemUiOverlayStyle>(
-            value: (currentTheme == AppTheme.light
-                    ? SystemUiOverlayStyle.dark
-                    : SystemUiOverlayStyle.light)
+            value: (currentTheme == AppTheme.light ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light)
                 .copyWith(statusBarColor: Colors.transparent),
             child: MaterialApp(
               title: appName,
@@ -201,9 +200,7 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              supportedLocales: supportedLocales
-                  .map(UiUtils.getLocaleFromLanguageCode)
-                  .toList(),
+              supportedLocales: supportedLocales.map(UiUtils.getLocaleFromLanguageCode).toList(),
               initialRoute: Routes.splash,
               onGenerateRoute: Routes.onGenerateRouted,
             ),

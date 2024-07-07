@@ -24,8 +24,7 @@ class AuthRepository {
       'isLogin': AuthLocalDataSource.checkIsAuth(),
       'jwtToken': AuthLocalDataSource.getJwtToken(),
       'firebaseId': AuthLocalDataSource.getUserFirebaseId(),
-      'authProvider':
-          getAuthProviderFromString(AuthLocalDataSource.getAuthType()),
+      'authProvider': getAuthProviderFromString(AuthLocalDataSource.getAuthType()),
     };
   }
 
@@ -65,20 +64,12 @@ class AuthRepository {
 
       final firebaseUser = FirebaseAuth.instance.currentUser!;
 
-      final userEmail = user?.email ??
-          additionalUserInfo.profile?['email'] as String? ??
-          firebaseUser.email ??
-          '';
-      final userPhotoUrl = user?.photoURL ??
-          additionalUserInfo.profile?['picture'] as String? ??
-          firebaseUser.photoURL ??
-          '';
-      final userPhoneNumber =
-          user?.phoneNumber ?? firebaseUser.phoneNumber ?? '';
-      final userName = user?.displayName ??
-          additionalUserInfo.profile?['name'] as String? ??
-          firebaseUser.displayName ??
-          '';
+      final userEmail = user?.email ?? additionalUserInfo.profile?['email'] as String? ?? firebaseUser.email ?? '';
+      final userPhotoUrl =
+          user?.photoURL ?? additionalUserInfo.profile?['picture'] as String? ?? firebaseUser.photoURL ?? '';
+      final userPhoneNumber = user?.phoneNumber ?? firebaseUser.phoneNumber ?? '';
+      final userName =
+          user?.displayName ?? additionalUserInfo.profile?['name'] as String? ?? firebaseUser.displayName ?? '';
       final userUid = user!.uid;
 
       /// checks in panel
